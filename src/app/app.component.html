@@ -1,3 +1,200 @@
-<h1>
-  {{title}}
-</h1>
+<div class="container">
+  <div class="header clearfix">
+  </div>
+  <div class="jumbotron">
+    <div class="starter-template">
+      <h2 class="text-muted">Contactos</h2>
+      <button class="btn btn-sucess pull-right"
+             (click)="mostrarInformacion('guardar')">
+        <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      <div>
+
+<table class="table">
+  <thead>
+    <th class="h3">Nombre</th>
+    <th class="h3">Cargo</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contacto of contactos">
+      <td class="lead">{{contacto.nombre}}</td>
+      <td class="lead">{{contacto.empresa.cargo}}</td>
+      <td> 
+        <button class="btn btn-primary"
+                  (click)="mostrarInformacion('mostrar', contacto.$key)">
+                    <span class="glyphicon glyphicon-info-sign"></span></button>
+        <button class="btn btn-primary" 
+                  (click)="editar(contacto.$key)">
+                    <span class="glyphicon glyphicon-edit"></span></button>
+        <button class="btn btn-danger" 
+                  (click)="borrarContacto(contacto.$key)">
+                    <span class="glyphicon glyphicon-remove"></span></button>
+      
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- MOSTRAR INFORMACION -->
+      <div *ngIf="estado=='mostrar'">
+        <div *ngFor="let contacto of contactos">
+          <div *ngIf="contacto.$key == idActual">
+            <h2>{{contacto.nombre}}</h2>
+            <p><strong>Correo Electrónico:</strong>{{contacto.correo}}</p>
+            <p><strong>Teléfono:</strong>{{contacto.telefono}}</p>
+            <p><strong>Website:</strong>{{contacto.website}}</p>
+            <p><strong>Dirección:</strong>{{contacto.direccion.calle}}, {{contacto.direccion.ciudad}}, {{contacto.direccion.codigo_postal}}</p>
+          </div>
+      </div>
+
+      </div>
+<!-- GUARDAR CONTACTO -->
+<div *ngIf="estado=='guardar'" class="container">
+  <h3>Agregar Contactos</h3>
+  <form #formulario="ngForm" (submit)="agregarContacto(formulario)">
+    <div class="col-md-4">
+      <h4>Datos Personales</h4>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" type="text" ngModel name="nombre"> 
+      </div>
+      <div class="form-group">
+        <label>Nombre de Usuario</label>
+        <input class="form-control" type="text" ngModel name="usuario"> 
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input class="form-control" type="text" ngModel name="telefono"> 
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input class="form-control" type="text" ngModel name="website"> 
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input class="form-control" type="text" ngModel name="correo"> 
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Agregar Contacto"> 
+        <input type="submit" class="btn btn-danger" value="Cancelar"> 
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h4>Dirección</h4>
+      <div class="form-group">
+        <label>Calle</label>
+        <input class="form-control" type="text" ngModel name="calle"> 
+      </div>
+            <div class="form-group">
+        <label>Ciudad</label>
+        <input class="form-control" type="text" ngModel name="ciudad"> 
+      </div>
+            <div class="form-group">
+        <label>Código Postal</label>
+        <input class="form-control" type="text" ngModel name="codigo_postal"> 
+      </div>
+    </div>
+
+        <div class="col-md-4">
+      <h4>Empresa</h4>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" type="text" ngModel name="empresa"> 
+      </div>
+            <div class="form-group">
+        <label>Cargo</label>
+        <input class="form-control" type="text" ngModel name="cargo"> 
+      </div>
+    </div>
+
+
+
+  </form>
+</div>
+<!-- EDITAR CONTACTO -->
+
+<div *ngIf="estado=='editar'" class="container">
+  <h3>Editar Contactos</h3>
+  <form (submit)="editarContacto()">
+    <div class="col-md-4">
+      <h4>Datos Personales</h4>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.nombre" name="nombre"> 
+      </div>
+      <div class="form-group">
+        <label>Nombre de Usuario</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.nombre_de_usuario" name="usuario"> 
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.telefono" name="telefono"> 
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.website" name="website"> 
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.correo" name="correo"> 
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Editar"> 
+        <input type="submit" class="btn btn-danger" value="Cancelar"> 
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h4>Dirección</h4>
+      <div class="form-group">
+        <label>Calle</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.direccion.calle" name="calle"> 
+      </div>
+            <div class="form-group">
+        <label>Ciudad</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.direccion.ciudad" name="ciudad"> 
+      </div>
+            <div class="form-group">
+        <label>Código Postal</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.direccion.codigo_postal" name="codigo_postal"> 
+      </div>
+    </div>
+
+        <div class="col-md-4">
+      <h4>Empresa</h4>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.empresa.nombre" name="empresa"> 
+      </div>
+            <div class="form-group">
+        <label>Cargo</label>
+        <input class="form-control" type="text"
+              [(ngModel)]="contactoAEditar.empresa.cargo" name="cargo"> 
+      </div>
+    </div>
+
+
+
+  </form>
+</div>
+
+<!-- END -->
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

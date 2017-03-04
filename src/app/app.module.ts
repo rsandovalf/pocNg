@@ -5,7 +5,9 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule, AuthProviders, AuthMethods  } from 'angularfire2';
 
 import { AppComponent } from './app.component';
+import {AppLogin} from './app.login';
 import {FirebaseService} from './servicios/firebase.service';
+import {FirebaseLogin} from './servicios/firebase.login';
 
 // Must export the config
 export const firebaseConfig = {
@@ -18,7 +20,7 @@ export const firebaseConfig = {
 
 };
 
-const myFirebaseAuthConfig = {
+const firebaseAuthConfig = {
   provider: AuthProviders.Password,
   method: AuthMethods.Password
 }
@@ -27,15 +29,15 @@ const myFirebaseAuthConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, AppLogin
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
   ],
-  providers: [FirebaseService],
-  bootstrap: [AppComponent]
+  providers: [FirebaseService, FirebaseLogin],
+  bootstrap: [AppLogin]
 })
 export class AppModule { }

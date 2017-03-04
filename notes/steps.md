@@ -15,6 +15,7 @@ Run `ng serve`.
 Navigate to `http://localhost:4200/`.
 
 ## Inclusión bootstrap
+## Esta linea es para GIT!!
 
 
 ## Inclusión de jquery que es usado por bootstrap.
